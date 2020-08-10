@@ -1,0 +1,8 @@
+.product {
+    border-color: blue;
+    border-style: solid;
+    margin: 7px 21px -4px 10px;
+    float: left;
+    width: 29%;
+    height: 254px
+}
