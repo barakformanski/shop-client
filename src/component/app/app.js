@@ -7,6 +7,7 @@ import { Slider } from "antd";
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from "react-router-dom";
 import ProductPage from '../../pages/productPage.js'
 import Search from "../search/Search.js"
+import axios from "axios";
 import { useRef } from "react";
 
 function App() {
@@ -20,53 +21,53 @@ function App() {
     // console.log("value search:", value);
   };
 
-  const App = () => {
-    const fileInput = useRef();
-    const uploadImage = () => {
-      const uploadedFile = fileInput.current;
 
-      axios.post("http://localhost:8000/upload", uploadedFile.files[0], {
-        params: { filename: uploadedFile.files[0].name }
-      });
-    };
+  const fileInput = useRef();
+  const uploadImage = () => {
+    const uploadedFile = fileInput.current;
 
-    return (
-      <Router>
-        <div className="app">
-
-
-          <Header />
-
-          <input type="file" ref={fileInput} />
-          <br />
-          <br />
-          <button onClick={uploadImage}>Upload  Image</button>
-
-
-          <Search onSearch={userSearch} />
-          <Switch>
-
-            <Route exact path="/">
-              <Slider range defaultValue={[0, 100]} onChange={userRange} />
-              <Products
-                range={range} search={search} />
-            </Route>
-
-            <Route path="/:id">
-              <ProductPage />
-            </Route>
-            {/* <Switch> */}
-            {/* <Route exact path="/">
-     <Products range={range} />
-          </Route> */}
-            {/* <Route path="/product/:id"> */}
-            {/* <Product /> */}
-            {/* </Route> */}
-          </Switch>
-
-        </div>
-      </Router>
-    );
+    axios.post("http://localhost:8000/upload", uploadedFile.files[0], {
+      params: { filename: uploadedFile.files[0].name }
+    });
   };
 
-  export default App;
+  return (
+    <Router>
+      <div className="app">
+
+
+        <Header />
+
+        <input type="file" ref={fileInput} />
+        <br />
+        <br />
+        <button onClick={uploadImage}>Upload  Image</button>
+
+
+        <Search onSearch={userSearch} />
+        <Switch>
+
+          <Route exact path="/">
+            <Slider range defaultValue={[0, 100]} onChange={userRange} />
+            <Products
+              range={range} search={search} />
+          </Route>
+
+          <Route path="/:id">
+            <ProductPage />
+          </Route>
+          {/* <Switch> */}
+          {/* <Route exact path="/">
+     <Products range={range} />
+          </Route> */}
+          {/* <Route path="/product/:id"> */}
+          {/* <Product /> */}
+          {/* </Route> */}
+        </Switch>
+
+      </div>
+    </Router>
+  );
+};
+
+export default App;
