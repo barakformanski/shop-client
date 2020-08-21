@@ -14,12 +14,13 @@ const Products = (props) => {
   // console.log(products);
   // console.log(productsInCart);
   const search = props.search;
+
   useEffect(() => {
     const params = { search: search }
     axios
 
       // .get("https://quilt-flax-chemistry.glitch.me/products/")
-      .get("http://localhost:3000/products", { params: params })
+      .get("http://localhost:5000/products", { params: params })
       .then((res) => {
         // console.log(res);
         const productsArray = res.data;

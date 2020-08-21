@@ -1,6 +1,8 @@
 import React from "react";
 import { Upload, message, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import axios from "axios";
+
 function Upload_component() {
     const props = {
         name: 'file',
@@ -14,6 +16,16 @@ function Upload_component() {
             }
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} file uploaded successfully`);
+                console.log(info);
+
+                console.log(info.file);
+                console.log(info.file.name);
+
+                axios.post("http://loacalhost:5000/upload", info.file, {
+                    params: { filename: info.file.name }
+
+                });
+
             } else if (info.file.status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }

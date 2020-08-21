@@ -7,6 +7,8 @@ import { Slider } from "antd";
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from "react-router-dom";
 import ProductPage from '../../pages/productPage.js'
 import Search from "../search/Search.js"
+import { useRef } from "react";
+
 function App() {
   const [range, setRange] = useState([0, 100]);
   let userRange = (value) => {
@@ -18,36 +20,53 @@ function App() {
     // console.log("value search:", value);
   };
 
+  const App = () => {
+    const fileInput = useRef();
+    const uploadImage = () => {
+      const uploadedFile = fileInput.current;
 
-  return (
-    <Router>
-      <div className="app">
+      axios.post("http://localhost:8000/upload", uploadedFile.files[0], {
+        params: { filename: uploadedFile.files[0].name }
+      });
+    };
+
+    return (
+      <Router>
+        <div className="app">
 
 
-        <Header />
-        <Search onSearch={userSearch} />
-        <Switch>
+          <Header />
 
-          <Route exact path="/">
-            <Slider range defaultValue={[0, 100]} onChange={userRange} />
-            <Products range={range} search={search} />
-          </Route>
+          <input type="file" ref={fileInput} />
+          <br />
+          <br />
+          <button onClick={uploadImage}>Upload  Image</button>
 
-          <Route path="/:id">
-            <ProductPage />
-          </Route>
-          {/* <Switch> */}
-          {/* <Route exact path="/">
+
+          <Search onSearch={userSearch} />
+          <Switch>
+
+            <Route exact path="/">
+              <Slider range defaultValue={[0, 100]} onChange={userRange} />
+              <Products
+                range={range} search={search} />
+            </Route>
+
+            <Route path="/:id">
+              <ProductPage />
+            </Route>
+            {/* <Switch> */}
+            {/* <Route exact path="/">
      <Products range={range} />
           </Route> */}
-          {/* <Route path="/product/:id"> */}
-          {/* <Product /> */}
-          {/* </Route> */}
-        </Switch>
+            {/* <Route path="/product/:id"> */}
+            {/* <Product /> */}
+            {/* </Route> */}
+          </Switch>
 
-      </div>
-    </Router>
-  );
-};
+        </div>
+      </Router>
+    );
+  };
 
-export default App;
+  export default App;
