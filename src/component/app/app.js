@@ -9,8 +9,10 @@ import ProductPage from '../../pages/productPage.js'
 import Search from "../search/Search.js"
 import axios from "axios";
 import { useRef } from "react";
+import createPersistedState from "use-persisted-state";
 
 function App() {
+  const [count, setCount] = useCounterState(0);
   document.cookie = "isLogIn=1";
   document.cookie = "isLogIn=2";
   document.cookie = "username=3; expires= sun, 1 aug 2021; path=/login";
@@ -23,7 +25,7 @@ function App() {
   // ])
   // );
   const localStorageValue = ("localStorage:", JSON.parse(localStorage.getItem("check")));
-  console.log("localStorage:", localStorageValue[0].title);
+  // console.log("localStorage:", localStorageValue[0].title);
 
 
   const [range, setRange] = useState([0, 100]);
@@ -79,6 +81,7 @@ function App() {
         <br />
         <button onClick={uploadImage}>Upload  Image</button>
         <button onClick={getProducts}>get products list</button>
+        <button onClick={() => setCount((currentCount) => currentCount + 1)}>increment saved on localstorage</button>
         <ul id="products"></ul>
 
         <Search onSearch={userSearch} />
