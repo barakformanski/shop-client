@@ -14,8 +14,18 @@ function App() {
   document.cookie = "isLogIn=1";
   document.cookie = "isLogIn=2";
   document.cookie = "username=3; expires= sun, 1 aug 2021; path=/login";
-  localStorage.setItem("check", true);
   console.log(document.cookie);
+  // localStorage.setItem("check", JSON.stringify([
+  //   {
+  //     id: 1,
+  //     title: "myProduct"
+  //   }
+  // ])
+  // );
+  const localStorageValue = ("localStorage:", JSON.parse(localStorage.getItem("check")));
+  console.log("localStorage:", localStorageValue[0].title);
+
+
   const [range, setRange] = useState([0, 100]);
   let userRange = (value) => {
     setRange(value);
@@ -47,7 +57,7 @@ function App() {
         <br />
         <br />
         <button onClick={uploadImage}>Upload  Image</button>
-
+        <button onClick={getProducts}>get products</button>
 
         <Search onSearch={userSearch} />
         <Switch>
