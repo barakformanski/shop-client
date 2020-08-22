@@ -12,6 +12,10 @@ import { useRef } from "react";
 
 function App() {
   document.cookie = "isLogIn=1";
+  document.cookie = "isLogIn=2";
+  document.cookie = "username=3; expires= sun, 1 aug 2021; path=/login";
+  localStorage.setItem("check", true);
+  console.log(document.cookie);
   const [range, setRange] = useState([0, 100]);
   let userRange = (value) => {
     setRange(value);
