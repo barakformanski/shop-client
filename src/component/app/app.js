@@ -45,6 +45,27 @@ function App() {
       params: { filename: uploadedFile.files[0].name }
     });
   };
+  async function getProducts() {
+    let data;
+    try {
+      ({ data } = await axios.get("http://localhost:5000/products"));
+    } catch (e) {
+      data = loadProducts();
+    }
+    const products = document.getElementById("products");
+    data.forEach((product) => {
+      const productLi = `<li>${product.title}</li>`;
+      products.innerHTML += productLi;
+    });
+    saveProducts(data);
+  }
+  function saveProducts(products) {
+    localStorage.setItem("products", JSON.stringify(products));
+  }
+  function loadProducts() {
+    const products = localStorage.getItem("products");
+    return products ? JSON.parse(products) : [];
+  }
 
   return (
     <Router>
@@ -57,7 +78,8 @@ function App() {
         <br />
         <br />
         <button onClick={uploadImage}>Upload  Image</button>
-        <button onClick={getProducts}>get products</button>
+        <button onClick={getProducts}>get products list</button>
+        <ul id="products"></ul>
 
         <Search onSearch={userSearch} />
         <Switch>
