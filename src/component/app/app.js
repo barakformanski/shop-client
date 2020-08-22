@@ -11,6 +11,7 @@ import axios from "axios";
 import { useRef } from "react";
 
 function App() {
+  document.cookie = "isLogIn=1";
   const [range, setRange] = useState([0, 100]);
   let userRange = (value) => {
     setRange(value);
@@ -26,7 +27,7 @@ function App() {
   const uploadImage = () => {
     const uploadedFile = fileInput.current;
 
-    axios.post("http://localhost:8000/upload", uploadedFile.files[0], {
+    axios.post("http://localhost:5000/upload", uploadedFile.files[0], {
       params: { filename: uploadedFile.files[0].name }
     });
   };
