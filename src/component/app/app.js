@@ -10,7 +10,7 @@ import Search from "../search/Search.js"
 import axios from "axios";
 import { useRef } from "react";
 import createPersistedState from "use-persisted-state";
-
+const useCounterState = createPersistedState("count");
 function App() {
   const [count, setCount] = useCounterState(0);
   document.cookie = "isLogIn=1";
@@ -81,7 +81,8 @@ function App() {
         <br />
         <button onClick={uploadImage}>Upload  Image</button>
         <button onClick={getProducts}>get products list</button>
-        <button onClick={() => setCount((currentCount) => currentCount + 1)}>increment saved on localstorage</button>
+        <button onClick={() => setCount((currentCount) => currentCount + 1)}>{count}  increment saved on localstorage</button>
+        {/* now i need to use this option to save on localstorage the users coose of products to bye so he won't loose his chooses from time to time/ i need to use this speacal state option on the buttons that count the bumbers in cartm,for example */}
         <ul id="products"></ul>
 
         <Search onSearch={userSearch} />
