@@ -6,9 +6,11 @@ import axios from "axios";
 import Cart from "../cart/cart.js";
 import createPersistedState from "use-persisted-state";
 const useCounterStateOnCart = createPersistedState("count");
+const useProductsState = createPersistedState("products");
 
 const Products = (props) => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
+  const [useProductsState, setProducts] = useState([]);
   const [productsInCart, setProductsInCart] = useState([]);
 
 
