@@ -13,7 +13,6 @@ const Products = (props) => {
   const [useProductsState, setProducts] = useState([]);
   const [productsInCart, setProductsInCart] = useState([]);
 
-
   // console.log(props.range);
   // console.log(products);
   // console.log(productsInCart);
@@ -21,24 +20,15 @@ const Products = (props) => {
 
   useEffect(() => {
     const params = { search: search }
-    axios
-
-      // .get("https://quilt-flax-chemistry.glitch.me/products/")
-      .get("http://localhost:5000/products", { params: params })
+    axios.get("http://localhost:5000/products", { params: params })
       .then((res) => {
         // console.log(res);
         const productsArray = res.data;
         console.log(productsArray);
         setProducts(res.data);
-        console.log(products);
-
-        setProducts(res.data);
-        console.log(productsArray);
-
-        console.log(products);
       });
   }, [search]);
-  console.log(products);
+  console.log(useProductsState);
 
 
   // const [cart, setCart] = useState(0);
@@ -61,7 +51,7 @@ const Products = (props) => {
     <div className="products">
 
 
-      {products
+      {useProductsState
         // .filter(
         //   (product) =>
         //     product.price >= props.range[0] && product.price <= props.range[1]
