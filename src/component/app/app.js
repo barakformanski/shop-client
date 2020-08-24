@@ -11,7 +11,7 @@ import axios from "axios";
 import { useRef } from "react";
 import createPersistedState from "use-persisted-state";
 const useCounterState = createPersistedState("count");
-function App() {
+function App(props) {
   const [count, setCount] = useCounterState(0);
   document.cookie = "isLogIn=1";
   document.cookie = "isLogIn=2";
@@ -38,7 +38,8 @@ function App() {
     // console.log("value search:", value);
   };
 
-  const [userImage, setUserImage] = useState('/images/cart.jpg');
+  const [userImage, setUserImage] = useState("");
+
   const fileInput = useRef();
   const uploadImage = () => {
     const uploadedFile = fileInput.current;
@@ -102,7 +103,9 @@ function App() {
           <Route exact path="/">
             <Slider range defaultValue={[0, 100]} onChange={userRange} />
             <Products
-              range={range} search={search} />
+              range={range} search={search}
+              userImage={userImage}
+            />
           </Route>
 
           <Route path="/:id">

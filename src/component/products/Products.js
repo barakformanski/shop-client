@@ -12,8 +12,10 @@ const Products = (props) => {
   // const [products, setProducts] = useState([]);
   const [useProductsState, setProducts] = useState([]);
   const [productsInCart, setProductsInCart] = useState([]);
-
+  const [userImage, setUserImage] = useState("/images/cart.jpg");
+  console.log(props.userImage);
   // console.log(props.range);
+
   // console.log(products);
   // console.log(productsInCart);
   const search = props.search;
@@ -78,6 +80,7 @@ const Products = (props) => {
 
       <Cart cart={cart}
         productsInCart={productsInCart}
+
       />
 
 
