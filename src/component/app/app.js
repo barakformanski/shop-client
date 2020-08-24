@@ -38,15 +38,26 @@ function App() {
     // console.log("value search:", value);
   };
 
-
+  const [userImage, setUserImage] = useState('/images/cart.jpg');
   const fileInput = useRef();
   const uploadImage = () => {
     const uploadedFile = fileInput.current;
-
     axios.post("http://localhost:5000/upload", uploadedFile.files[0], {
-      params: { filename: uploadedFile.files[0].name }
+      params: { filename: uploadedFile.files[0].name },
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        console.log("percentCompleted:", percentCompleted);
+        setUserImage("http://localhost:5000/images/" + uploadedFile.files[0].name);
+      },
     });
   };
+  console.log(userImage);
+
+
+  // giving the user the full list of the products
+
   async function getProducts() {
     let data;
     try {
