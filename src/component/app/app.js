@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import socketIOClient from "socket.io-client";
 
 import "./app.css";
 import Header from "../header/Header";
@@ -11,6 +12,7 @@ import axios from "axios";
 import { useRef } from "react";
 import createPersistedState from "use-persisted-state";
 const useCounterState = createPersistedState("count");
+
 function App(props) {
   const [count, setCount] = useCounterState(0);
   document.cookie = "isLogIn=1";
@@ -81,6 +83,15 @@ function App(props) {
     return products ? JSON.parse(products) : [];
   }
 
+  useEffect(() => {
+    const socket = socketIOClient("http://localhost:5000");
+    socket.on("FromAPI", (data) => {
+      setProduct(data);
+      setTimeout(() => setProduct({}), 3000);
+    });
+  }, []);
+  const [product, setProduct] = useState({});
+
   return (
     <Router>
       <div className="app">
@@ -90,6 +101,9 @@ function App(props) {
 
         <input type="file" ref={fileInput} />
         <br />
+        <div style={{ padding: "30px" }}>
+          {product && product.title && <div> NEW PRODUCT ARRIVED! {product.title}</div>}
+        </div>
         <br />
         <button onClick={uploadImage}>Upload  Image</button>
         <button onClick={getProducts}>get products list</button>
@@ -121,6 +135,7 @@ function App(props) {
         </Switch>
 
       </div>
+
     </Router>
   );
 };
