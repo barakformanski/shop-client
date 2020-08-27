@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Products from "../products/Products.js";
 import "./cart.css";
 import CartWithProdcts from "../cartwithproducts/CartWithProducts.js";
-import Upload_component from "./upload/Upload_component.js";
 
 function Cart(props) {
 
@@ -18,7 +17,6 @@ function Cart(props) {
   return (
     <div className="cart">
       <div className="cartHeader">
-        <Upload_component />
         <span>your cart</span>
         {cartImage ? < img src={cartImage} /> :
           <img className="userCartImage" src={defultCartImage} />}
