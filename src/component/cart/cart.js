@@ -6,7 +6,7 @@ import CartWithProdcts from "../cartwithproducts/CartWithProducts.js";
 function Cart(props) {
 
   const defultCartImage = '../../images/cart.jpg';
-  console.log(defultCartImage);
+  console.log("defultCartImage:", defultCartImage);
   const [cartImage, setCartImage] = useState('');
 
 
