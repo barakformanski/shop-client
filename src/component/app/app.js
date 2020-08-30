@@ -12,7 +12,7 @@ import axios from "axios";
 import { useRef } from "react";
 import createPersistedState from "use-persisted-state";
 const useCounterState = createPersistedState("count");
-
+// app.use(cors());
 function App(props) {
   const [count, setCount] = useCounterState(0);
   document.cookie = "isLogIn=1";
@@ -101,9 +101,9 @@ function App(props) {
 
         <input type="file" ref={fileInput} />
         <br />
-        <div style={{ padding: "30px" }}>
+        {/* <div style={{ padding: "30px" }}>
           {product && product.title && <div> NEW PRODUCT ARRIVED! {product.title}</div>}
-        </div>
+        </div> */}
         <br />
         <button onClick={uploadImage}>Upload  Image</button>
         <button onClick={getProducts}>get products list</button>
