@@ -113,8 +113,8 @@ function App(props) {
 
         <Search onSearch={userSearch} />
         <Switch>
-
           <Route exact path="/">
+
             <Slider range defaultValue={[0, 100]} onChange={userRange} />
             <Products
               range={range} search={search}
@@ -125,13 +125,11 @@ function App(props) {
           <Route path="/:id">
             <ProductPage />
           </Route>
-          {/* <Switch> */}
-          {/* <Route exact path="/">
-     <Products range={range} />
-          </Route> */}
-          {/* <Route path="/product/:id"> */}
-          {/* <Product /> */}
-          {/* </Route> */}
+
+          <Route path="/:adminLog">
+            <crudPage />
+            {/* i need to write crud component here */}
+          </Route>
         </Switch>
 
       </div>
