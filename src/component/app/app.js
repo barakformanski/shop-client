@@ -4,6 +4,8 @@ import socketIOClient from "socket.io-client";
 import "./app.css";
 import Header from "../header/Header";
 import Products from "../products/Products.js";
+import AdminPage from "../../pages/AdminPage.js"
+
 import { Slider } from "antd";
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from "react-router-dom";
 import ProductPage from '../../pages/productPage.js'
@@ -113,6 +115,12 @@ function App(props) {
 
         <Search onSearch={userSearch} />
         <Switch>
+
+          <Route exact path="/adminLogIn">
+            <AdminPage />
+            {/* i need to write crud component here */}
+          </Route>
+
           <Route exact path="/">
 
             <Slider range defaultValue={[0, 100]} onChange={userRange} />
@@ -126,10 +134,7 @@ function App(props) {
             <ProductPage />
           </Route>
 
-          <Route path="/:adminLog">
-            <crudPage />
-            {/* i need to write crud component here */}
-          </Route>
+
         </Switch>
 
       </div>

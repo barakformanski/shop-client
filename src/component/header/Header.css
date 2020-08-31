@@ -1,4 +1,4 @@
-.header{
+.header_text{
     border-color: orange;
     border-style: solid;
     margin: 10px 10px 10px 10px;
@@ -9,4 +9,8 @@
     color: orange;
     
     width: 80%;
+}
+button{
+    float:right;
+
 }

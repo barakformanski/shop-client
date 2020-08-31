@@ -9,15 +9,24 @@ const ProductPage = (props) => {
     console.log(id);
 
     useEffect(() => {
-        // const url = `https://quilt-flax-chemistry.glitch.me/products/${id}`
-        const url = `http://localhost:3000/products/${id}`
+        const url = `http://localhost:5000/products/${id}`
         axios.get(url)
             .then(({ data }) => {
-                setProduct(data)
+                setProduct(data);
 
             })
     }, [])
-
+    // useEffect(() => {
+    //     // const params = { search: search }
+    //     axios.get("http://localhost:5000/products", { params: params })
+    //       .then((res) => {
+    //         // console.log(res);
+    //         const productsArray = res.data;
+    //         console.log(productsArray);
+    //         setProducts(res.data);
+    //       });
+    //   }, [search]);
+    //   console.log(useProductsState);
     return (
         product &&
         <div>
