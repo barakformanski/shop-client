@@ -4,7 +4,7 @@ import socketIOClient from "socket.io-client";
 import "./app.css";
 import Header from "../header/Header";
 import Products from "../products/Products.js";
-import AdminPage from "../../pages/AdminPage.js"
+import AdminPage from "../../pages/adminPage/AdminPage.js"
 
 import { Slider } from "antd";
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from "react-router-dom";
