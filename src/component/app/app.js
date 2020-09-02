@@ -16,6 +16,7 @@ import createPersistedState from "use-persisted-state";
 const useCounterState = createPersistedState("count");
 // app.use(cors());
 function App(props) {
+
   const [count, setCount] = useCounterState(0);
   document.cookie = "isLogIn=1";
   document.cookie = "isLogIn=2";
@@ -85,14 +86,6 @@ function App(props) {
     return products ? JSON.parse(products) : [];
   }
 
-  useEffect(() => {
-    const socket = socketIOClient("http://localhost:5000");
-    socket.on("FromAPI", (data) => {
-      setProduct(data);
-      setTimeout(() => setProduct({}), 3000);
-    });
-  }, []);
-  const [product, setProduct] = useState({});
 
   return (
     <Router>

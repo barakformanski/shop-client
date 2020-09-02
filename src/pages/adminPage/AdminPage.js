@@ -26,6 +26,7 @@ const AdminPage = (props) => {
     }
 
     const idTodelete = useRef();
+    const idToUpdate = useRef();
 
     function DeleteProduct() {
         axios
@@ -34,6 +35,13 @@ const AdminPage = (props) => {
                 console.log(`product with id ${idTodelete.current.value} deleted`);
             });
     }
+    // function updateProduct() {
+    //     axios
+    //         .put(`http://127.0.0.1:5000/products/${idTodelete.current.value}`)
+    //         .then((res) => {
+    //             console.log(`product with id ${idTodelete.current.value} deleted`);
+    //         });
+    // }
 
     return (
         <div className="adminPage">
@@ -41,6 +49,11 @@ const AdminPage = (props) => {
                 <h1>מחיקת מוצר </h1>
                 <input className="deletedProductInput" type="text" ref={idTodelete} placeholder="של המוצר שברצונך למחוק id הכנס את ה" />
                 <button className="send id" onClick={DeleteProduct}>לחץ כדי למחוק</button>
+            </div>
+            <div className="update_quantity">
+                <h1>עדכון מלאי מוצר </h1>
+                <input className="deletedProductInput" type="text" ref={idToUpdate} placeholder="של המוצר שברצונך לעדכן id הכנס את ה" />
+                <button className="send id" onClick={idToUpdate}>לחץ כדי לעדכן</button>
             </div>
             <div className="newProductInPut">
                 <h1>הוספת מוצר חדש</h1>

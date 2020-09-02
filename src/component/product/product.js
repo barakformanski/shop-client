@@ -8,6 +8,8 @@ const Product = (props) => {
   const [quantity, setquantity] = useState(props.quantity);
   const [checkIfClicked, setCheckIfClicked] = useState(true);
 
+
+
   const add_to_cart = () => {
     if (quantity) {
       setquantity(quantity - 1);
@@ -27,6 +29,10 @@ const Product = (props) => {
   };
 
 
+  useEffect(() => {
+    setquantity(props.quantity);
+  }, [props.quantity]
+  )
   return (
     <div>
       <Link to={`${props.id}`}>
