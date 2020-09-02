@@ -65,6 +65,7 @@ const Products = (props) => {
   };
 
   // const [productQuantity, setProductQuantity] = useState();
+
   useEffect(() => {
     const socket = socketIOClient("http://localhost:5000");
     socket.on("quantity_updated", (data) => {
@@ -78,30 +79,9 @@ const Products = (props) => {
       updatedProducts[productIndex].quantity = data.quantity;
       console.log(updatedProducts);
       setProducts(updatedProducts);
-      // setidProductFromSocketToChange(data.id);
 
-      // console.log(setProducts[Products[data.id]](data.quantity));
-      // const products = JSON.parse(data);
-      // const productId = +req.params.id;
-      // const productIndex = products.findIndex((product) => product.id === productId);
-      // products[productIndex].quantity = req.body.quantity;
-      // const newQuantityOfProuduct = {
-      //     id: productId,
-      //     quantity: products[productIndex].quantity
-      // }
-
-      // setProduct(data);
-      // setTimeout(() => setProduct({}), 3000);
     });
   }, []);
-  console.log(Products);
-
-
-  // useEffect(() => {
-
-  //   useProductsState(updatedProducts);
-  // }, []);
-
   return (
     <div className="products">
 
