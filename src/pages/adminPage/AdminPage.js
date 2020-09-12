@@ -1,12 +1,21 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from 'axios';
-import "./adminPage.css"
+import "./adminPage.css";
+import Products from "../../component/products/Products";
+import props from 'prop-types';
+
+import socketIOClient from "socket.io-client";
+
+
+
 
 const AdminPage = (props) => {
     const title = useRef();
     const price = useRef();
     const description = useRef();
     const quantity = useRef();
+
+    console.log(props.products);
 
     function addProduct() {
         const newProduct = {
@@ -29,19 +38,23 @@ const AdminPage = (props) => {
     const idToUpdate = useRef();
 
     function DeleteProduct() {
+        console.log("idTodelete:", idTodelete);
         axios
             .delete(`http://127.0.0.1:5000/products/${idTodelete.current.value}`)
             .then((res) => {
-                console.log(`product with id ${idTodelete.current.value} deleted`);
+                alert(`product with id ${idTodelete.current.value} deleted`);
             });
     }
-    // function updateProduct() {
-    //     axios
-    //         .put(`http://127.0.0.1:5000/products/${idTodelete.current.value}`)
-    //         .then((res) => {
-    //             console.log(`product with id ${idTodelete.current.value} deleted`);
-    //         });
-    // }
+
+    useEffect(() => {
+        const socket = socketIOClient("http://localhost:5000");
+        socket.on("product_deleted", (data) => {
+            console.log(data);
+            const updatedProducts = data;
+            // setProducts(updatedProducts);
+
+        });
+    }, [DeleteProduct]);
 
     return (
         <div className="adminPage">

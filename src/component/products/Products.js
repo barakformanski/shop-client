@@ -13,7 +13,7 @@ const useProductsState = createPersistedState("products");
 const Products = (props) => {
   // const [products, setProducts] = useState([]);
   // const [useProductsState, setProducts] = useState([]);
-  const [Products, setProducts] = useProductsState([]);
+  const [products, setProducts] = useProductsState([]);
   const [productsInCart, setProductsInCart] = useState([]);
   const [userImage, setUserImage] = useState("");
   const [idProductFromSocketToChange, setidProductFromSocketToChange] = ('');
@@ -38,20 +38,13 @@ const Products = (props) => {
         setProducts(res.data);
       });
   }, [search]);
-  console.log(Products);
-  console.log(Products[0]);
-  if (Products.length) {
-    console.log(Products[0].id);
 
-  }
+  // console.log(products);
+  // console.log(products[0]);
+  // if (products.length) {
+  //   console.log(products[0].id);
 
-  // console.log(useProductsState[0].id);
-
-  // const [cart, setCart] = useState(0);
-  // const add = (productId) => {
-  //   // console.log("productId:", productId);
-  //   setCart(cart + 1);
-  // };
+  // }
   const [cart, setCart] = useCounterStateOnCart(0);
   const add = (productId) => {
     // console.log("productId:", productId);
@@ -64,15 +57,14 @@ const Products = (props) => {
     }
   };
 
-  // const [productQuantity, setProductQuantity] = useState();
 
   useEffect(() => {
     const socket = socketIOClient("http://localhost:5000");
-    socket.on("quantity_updated", (data) => {
+    socket.on("product_updated", (data) => {
       console.log(data);
       console.log("id to update:", data.id);
       console.log("new quantity", data.quantity);
-      const updatedProducts = Products.slice();
+      const updatedProducts = products.slice();
       // const updatedProducts = [...Products];
       console.log(updatedProducts);
       const productIndex = updatedProducts.findIndex((product) => product.id === data.id);
@@ -81,12 +73,18 @@ const Products = (props) => {
       setProducts(updatedProducts);
 
     });
+
+    socket.on("product_deleted", (data) => {
+      setProducts(data);
+
+    })
+
   }, []);
   return (
     <div className="products">
 
 
-      {Products
+      {products
         // .filter(
         //   (product) =>
         //     product.price >= props.range[0] && product.price <= props.range[1]
@@ -94,7 +92,7 @@ const Products = (props) => {
         .map((product) => (
           <div className="product" key={product.id}>
             <Product
-              id={product.id}
+              id={product._id}
               title={product.title}
               price={product.price}
               src={product.image}

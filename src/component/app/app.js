@@ -14,6 +14,8 @@ import axios from "axios";
 import { useRef } from "react";
 import createPersistedState from "use-persisted-state";
 const useCounterState = createPersistedState("count");
+// const Routes = require('../../../../ProductController/Product.Route.js');
+// App.use('/', Routes);
 // app.use(cors());
 function App(props) {
 
@@ -78,9 +80,12 @@ function App(props) {
     });
     saveProducts(data);
   }
+
   function saveProducts(products) {
+    // localStorage.setItem("products", JSON.stringify(products));
     localStorage.setItem("products", JSON.stringify(products));
   }
+
   function loadProducts() {
     const products = localStorage.getItem("products");
     return products ? JSON.parse(products) : [];
@@ -110,7 +115,9 @@ function App(props) {
         <Switch>
 
           <Route exact path="/adminLogIn">
-            <AdminPage />
+            <AdminPage
+            // products={products}
+            />
             {/* i need to write crud component here */}
           </Route>
 

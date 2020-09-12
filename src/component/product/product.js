@@ -24,8 +24,11 @@ const Product = (props) => {
     }
   };
   const remove_from_cart = () => {
-    setquantity(quantity + 1);
-    props.remove();
+    if (quantity < props.quantity) {
+      setquantity(quantity + 1);
+      props.remove();
+    }
+    else { setquantity(props.quantity) }
   };
 
 
