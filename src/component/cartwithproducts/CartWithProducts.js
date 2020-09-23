@@ -1,7 +1,13 @@
-import React from 'react';
-// import Cart from '../cart/cart.js';
+import React from "react";
+// import React, { useContext } from "react";
+// import Context from '../Context';
+
 
 function CartWithProducts(props) {
+    console.log("props.id in cart", props.quantity);
+    // const {
+    //     productsFromDB, products, setProducts, userSearch, setUserSearch, cartCount, setCartCount, itemsInCart, setItemsInCart
+    //   } = useContext(Context);
     return (
         <div id={props.id}>
             <h2>Title: {props.title}</h2>

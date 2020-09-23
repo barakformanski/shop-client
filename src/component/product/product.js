@@ -1,40 +1,81 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Product.css";
-import Cart from "../cart/cart";
-import Products from "../products/Products.js"
+import Context from '../Context';
+
+// import Cart from "../cart/cart";
+// import Products from "../products/Products.js"
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const Product = (props) => {
   const [quantity, setquantity] = useState(props.quantity);
   const [checkIfClicked, setCheckIfClicked] = useState(true);
-
+  const [quantityInCart, setQuantityInCart] = useState(0);
+  const {
+    productsFromDB, products, setProducts, cartCount, setCartCount, userSearch, setUserSearch, itemsInCart, setItemsInCart
+  } = useContext(Context);
 
 
   const add_to_cart = () => {
-    if (quantity) {
+    if (props.quantity) {
+      setCartCount(cartCount + 1)
       setquantity(quantity - 1);
-      props.add(props.id);
+
       if (checkIfClicked === true) {
 
-        props.setProductsInCart(props.productsInCart.concat([{ id: props.id, title: props.title, price: props.price, image: props.src }]));
-        console.log(props.productsInCart);
+        console.log("itemsInCart:", itemsInCart);
+
+        setItemsInCart(itemsInCart.concat([{ id: props.id, title: props.title, price: props.price, image: props.src, quantity: 1 }]));
+        // setItemsInCart(newItemsInCartArray);
 
         setCheckIfClicked(false);
-      } else { };
+      } else {
+
+        const productIndex = itemsInCart.findIndex(product => product.id == props.id);
+        let newItemsInCartArray = [...itemsInCart];
+        console.log(newItemsInCartArray[productIndex] = { ...newItemsInCartArray[productIndex], quantity: itemsInCart[productIndex].quantity + 1 });
+        setItemsInCart(newItemsInCartArray);
+
+        //   props.add(props.id);
+      };
     }
-  };
+  }
   const remove_from_cart = () => {
-    if (quantity < props.quantity) {
-      setquantity(quantity + 1);
-      props.remove();
+    if
+      (quantity + 1 === props.quantity) {
+
+      setCartCount(cartCount - 1)
+
+      removeFromCart()
+
     }
-    else { setquantity(props.quantity) }
+    else if
+      (quantity < props.quantity) {
+
+      setCartCount(cartCount - 1)
+      setquantity(quantity + 1);
+      const productIndex = itemsInCart.findIndex(product => product.id == props.id);
+      let newItemsInCartArray = [...itemsInCart];
+      console.log(newItemsInCartArray[productIndex] = { ...newItemsInCartArray[productIndex], quantity: itemsInCart[productIndex].quantity - 1 });
+      setItemsInCart(newItemsInCartArray);
+
+    }
   };
 
 
+  const removeFromCart = () => {
+    console.log('itemsInCart:', itemsInCart);
+    console.log('props.id:', props.id);
+    setItemsInCart(itemsInCart.filter((productToRemoveFromCart) =>
+      props.id !== productToRemoveFromCart.id,
+      setCheckIfClicked(true),
+      setquantity(quantity + 1)
+
+    ))
+  };
   useEffect(() => {
     setquantity(props.quantity);
-  }, [props.quantity]
+  }
+    , [props.quantity]
   )
   return (
     <div>
@@ -52,8 +93,8 @@ const Product = (props) => {
 
 
       <button onClick={add_to_cart
-      }>add_to_cart</button>
-      <button onClick={remove_from_cart}>remove_from_cart</button>
+      }>add to cart</button>
+      <button onClick={remove_from_cart}>remove from cart</button>
     </div>
   );
 };

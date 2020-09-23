@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useParams } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./products.css";
 import socketIOClient from "socket.io-client";
 
@@ -6,38 +6,71 @@ import Product from "../product/product.js";
 import axios from "axios";
 import Cart from "../cart/cart.js";
 import createPersistedState from "use-persisted-state";
-import { isElementOfType } from "react-dom/test-utils";
+import Context from '../Context';
+// import { isElementOfType } from "react-dom/test-utils";
+
+
 const useCounterStateOnCart = createPersistedState("count");
 const useProductsState = createPersistedState("products");
 
 const Products = (props) => {
+  const {
+    productsFromDB, products, setProducts, userSearch, setUserSearch, itemsInCart, setItemsInCart
+  } = useContext(Context);
+
   // const [products, setProducts] = useState([]);
   // const [useProductsState, setProducts] = useState([]);
-  const [products, setProducts] = useProductsState([]);
-  const [productsInCart, setProductsInCart] = useState([]);
+  // מה זה usestate? לחזור!
+  // const [productsInCart, setProductsInCart] = useState([]);
   const [userImage, setUserImage] = useState("");
   const [idProductFromSocketToChange, setidProductFromSocketToChange] = ('');
+
+
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/products`)
+      .then((res) => {
+        console.log("res:", res);
+        console.log("res.data:", res.data);
+        const productsarray = res.data;
+        // products = res.data;
+        // console.log("products:", products);
+        setProducts(productsarray);
+
+      });
+  }, []);
+  console.log("products:", products);
+
+  // useEffect(() => {
+  //   axios.get(`http://localhost:5000/products/`)
+  //     .then((res) => {
+  //       console.log(products);
+  //       console.log("res:", res);
+  //       const productsArray = res.data;
+  //       console.log("productsArray:", productsArray);
+  //       setProducts(res.data);
+  //     });
+  // }, []);
+  // console.log(products);
+  // לא מוכן
+  useEffect(() => {
+    axios.get(`http://localhost:5000/products/search`)
+      .then((res) => {
+        console.log(res);
+        console.log(userSearch);
+
+        // products = res.data;
+        console.log(products);
+        setProducts(res.data);
+      });
+  }, []);
+
+
+
   useEffect(() => {
     setUserImage(props.userImage);
   }, [props.userImage]);
   console.log(userImage);
-
-  // console.log(props.range);
-
-  // console.log(products);
-  // console.log(productsInCart);
-  const search = props.search;
-
-  useEffect(() => {
-    const params = { search: search }
-    axios.get("http://localhost:5000/products", { params: params })
-      .then((res) => {
-        // console.log(res);
-        const productsArray = res.data;
-        console.log(productsArray);
-        setProducts(res.data);
-      });
-  }, [search]);
 
   // console.log(products);
   // console.log(products[0]);
@@ -45,17 +78,18 @@ const Products = (props) => {
   //   console.log(products[0].id);
 
   // }
-  const [cart, setCart] = useCounterStateOnCart(0);
-  const add = (productId) => {
-    // console.log("productId:", productId);
-    setCart(cart + 1);
-  };
+  // const [cart, setCart] = useCounterStateOnCart(0);
 
-  const remove = () => {
-    if (cart) {
-      setCart(cart - 1);
-    }
-  };
+  // const add = (productId) => {
+  //   // console.log("productId:", productId);
+  //   setCart(cart + 1);
+  // };
+
+  // const remove = () => {
+  //   if (cart) {
+  //     setCart(cart - 1);
+  //   }
+  // };
 
 
   useEffect(() => {
@@ -90,27 +124,26 @@ const Products = (props) => {
         //     product.price >= props.range[0] && product.price <= props.range[1]
         // )
         .map((product) => (
-          <div className="product" key={product.id}>
+          <div className="product" >
             <Product
+              key={product._id}
               id={product._id}
               title={product.title}
               price={product.price}
               src={product.image}
               quantity={product.quantity}
               description={product.description}
-              add={add}
-              remove={remove}
-
-              productsInCart={productsInCart}
-              setProductsInCart={setProductsInCart}
+              itemsInCart={itemsInCart}
+              setItemsInCart={setItemsInCart}
 
             />
           </div>
 
         ))}
 
-      <Cart cart={cart}
-        productsInCart={productsInCart}
+      <Cart
+        // cartCount={cartCount}
+        // itemsInCart={itemsInCart}
         userImage={userImage}
 
       />
