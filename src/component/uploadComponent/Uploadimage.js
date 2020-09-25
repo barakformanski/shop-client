@@ -26,7 +26,7 @@ function UploadImage() {
         <div>
             <input type="file" ref={fileInput} />
 
-            <button onClick={uploadImage}>Upload  Image</button>
+            <button onClick={uploadImage}>החלף תמונת עגלה</button>
         </div>
     )
 };

@@ -10,12 +10,12 @@ import Context from '../Context';
 // import { isElementOfType } from "react-dom/test-utils";
 
 
-const useCounterStateOnCart = createPersistedState("count");
-const useProductsState = createPersistedState("products");
+// const useCounterStateOnCart = createPersistedState("count");
+// const useProductsState = createPersistedState("products");
 
 const Products = (props) => {
   const {
-    productsFromDB, products, setProducts, userSearch, setUserSearch, itemsInCart, setItemsInCart
+    products, setProducts, userSearch, setUserSearch, itemsInCart, setItemsInCart
   } = useContext(Context);
 
   // const [products, setProducts] = useState([]);

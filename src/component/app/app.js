@@ -134,7 +134,7 @@ function App(props) {
         <div className="app">
 
 
-          <Header />
+          <Header className="heder_component" />
 
           {/* <input type="file" ref={fileInput} /> */}
           {/* <br /> */}
@@ -142,9 +142,10 @@ function App(props) {
           {product && product.title && <div> NEW PRODUCT ARRIVED! {product.title}</div>}
         </div> */}
           {/* <br /> */}
-          {/* <button onClick={uploadImage}>Upload  Image</button> */}
-          <button onClick={getProductsList}>get products list</button>
-          <button onClick={() => setCount((currentCount) => currentCount + 1)}>{count}  increment saved on localstorage</button>
+
+          <button className="get_products_button" onClick={getProductsList}>products list</button>
+          <button className="local_storage_button" onClick={() => setCount((currentCount) => currentCount + 1)}>{count}localstorage</button>
+
           {/* now i need to use this option to save on localstorage the users coose of products to bye so he won't loose his chooses from time to time/ i need to use this speacal state option on the buttons that count the bumbers in cartm,for example */}
           <ul id="products"></ul>
 

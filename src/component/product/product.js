@@ -22,20 +22,16 @@ const Product = (props) => {
 
       if (checkIfClicked === true) {
 
-        console.log("itemsInCart:", itemsInCart);
-
         setItemsInCart(itemsInCart.concat([{ id: props.id, title: props.title, price: props.price, image: props.src, quantity: 1 }]));
-        // setItemsInCart(newItemsInCartArray);
 
         setCheckIfClicked(false);
+
       } else {
 
         const productIndex = itemsInCart.findIndex(product => product.id == props.id);
         let newItemsInCartArray = [...itemsInCart];
-        console.log(newItemsInCartArray[productIndex] = { ...newItemsInCartArray[productIndex], quantity: itemsInCart[productIndex].quantity + 1 });
+        newItemsInCartArray[productIndex] = { ...newItemsInCartArray[productIndex], quantity: itemsInCart[productIndex].quantity + 1 };
         setItemsInCart(newItemsInCartArray);
-
-        //   props.add(props.id);
       };
     }
   }
@@ -55,7 +51,7 @@ const Product = (props) => {
       setquantity(quantity + 1);
       const productIndex = itemsInCart.findIndex(product => product.id == props.id);
       let newItemsInCartArray = [...itemsInCart];
-      console.log(newItemsInCartArray[productIndex] = { ...newItemsInCartArray[productIndex], quantity: itemsInCart[productIndex].quantity - 1 });
+      newItemsInCartArray[productIndex] = { ...newItemsInCartArray[productIndex], quantity: itemsInCart[productIndex].quantity - 1 };
       setItemsInCart(newItemsInCartArray);
 
     }
@@ -63,8 +59,6 @@ const Product = (props) => {
 
 
   const removeFromCart = () => {
-    console.log('itemsInCart:', itemsInCart);
-    console.log('props.id:', props.id);
     setItemsInCart(itemsInCart.filter((productToRemoveFromCart) =>
       props.id !== productToRemoveFromCart.id,
       setCheckIfClicked(true),
@@ -72,6 +66,7 @@ const Product = (props) => {
 
     ))
   };
+  // מה שימוש של הuse efect הזה?
   useEffect(() => {
     setquantity(props.quantity);
   }
@@ -80,8 +75,8 @@ const Product = (props) => {
   return (
     <div>
       <Link to={`${props.id}`}>
-        <h2>Title: {props.title}</h2>
-        <h3>Price: {props.price}</h3>
+        <div>{props.title}</div>
+        <div>ש"ח {props.price}</div>
 
         <div>
 
@@ -89,12 +84,12 @@ const Product = (props) => {
 
         </div>
       </Link>
-      <div className="quantity">quantity: {quantity} </div>
+      <div className="quantity"> פריטים במלאי{quantity}</div>
 
 
       <button onClick={add_to_cart
-      }>add to cart</button>
-      <button onClick={remove_from_cart}>remove from cart</button>
+      }>+</button>
+      <button onClick={remove_from_cart}>-</button>
     </div>
   );
 };

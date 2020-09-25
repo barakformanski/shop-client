@@ -11,7 +11,7 @@ function Header() {
         <div className="header">
             <div className="header_text">welcome to the our digital shop!
               <Link to="/adminLogIn">
-                    <button>enter as an admin</button>
+                    <button className="login_button">admin acces</button>
                     {/* <Login /> */}
                 </Link>
             </div>

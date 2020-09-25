@@ -25,10 +25,10 @@ function Cart(props) {
     <div className="cart">
 
       <div className="cartHeader">
-        <span>your cart</span>
+        <span>עגלת המוצרים שלך</span>
         {cartImage ? < img src={cartImage} /> :
           <img className="userCartImage" src={defultCartImage} />}
-        <div className="cartNumber"> number of products: {cartCount}</div>
+        <div className="cartNumber"> סך המוצרים בעגלה {cartCount}</div>
         <div> <UploadImage /> </div>
 
       </div>
