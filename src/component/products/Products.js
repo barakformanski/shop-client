@@ -91,6 +91,16 @@ const Products = (props) => {
   //   }
   // };
 
+  useEffect(() => {
+    const socket = socketIOClient("http://localhost:5000");
+    socket.on("product_added", (data) => {
+      setNewProduct(data);
+
+      setTimeout(() => setNewProduct({}), 3000);
+    });
+  }, []);
+  let [newProduct, setNewProduct] = useState({});
+  console.log("data", newProduct.title);
 
   useEffect(() => {
     const socket = socketIOClient("http://localhost:5000");
@@ -105,7 +115,6 @@ const Products = (props) => {
       updatedProducts[productIndex].quantity = data.quantity;
       console.log(updatedProducts);
       setProducts(updatedProducts);
-
     });
 
     socket.on("product_deleted", (data) => {
@@ -116,30 +125,35 @@ const Products = (props) => {
   }, []);
   return (
     <div className="products">
+      <div style={{ padding: "30px" }}>
+        {newProduct && newProduct.title &&
+          <div>שים לב! מוצר חדש אפשרי לקניה {newProduct.title}</div>}
+      </div>
 
+      {
+        products
+          // .filter(
+          //   (product) =>
+          //     product.price >= props.range[0] && product.price <= props.range[1]
+          // )
+          .map((product) => (
+            <div className="product" >
+              <Product
+                key={product._id}
+                id={product._id}
+                title={product.title}
+                price={product.price}
+                src={product.image}
+                quantity={product.quantity}
+                description={product.description}
+                itemsInCart={itemsInCart}
+                setItemsInCart={setItemsInCart}
 
-      {products
-        // .filter(
-        //   (product) =>
-        //     product.price >= props.range[0] && product.price <= props.range[1]
-        // )
-        .map((product) => (
-          <div className="product" >
-            <Product
-              key={product._id}
-              id={product._id}
-              title={product.title}
-              price={product.price}
-              src={product.image}
-              quantity={product.quantity}
-              description={product.description}
-              itemsInCart={itemsInCart}
-              setItemsInCart={setItemsInCart}
+              />
+            </div>
 
-            />
-          </div>
-
-        ))}
+          ))
+      }
 
       <Cart
         // cartCount={cartCount}
@@ -149,7 +163,7 @@ const Products = (props) => {
       />
 
 
-    </div>
+    </div >
   );
 };
 export default Products;
