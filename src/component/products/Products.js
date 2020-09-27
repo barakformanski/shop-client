@@ -90,7 +90,8 @@ const Products = (props) => {
   //     setCart(cart - 1);
   //   }
   // };
-
+  let [newProduct, setNewProduct] = useState({});
+  // apdet products DB and client with socket io
   useEffect(() => {
     const socket = socketIOClient("http://localhost:5000");
     socket.on("product_added", (data) => {
@@ -99,8 +100,22 @@ const Products = (props) => {
       setTimeout(() => setNewProduct({}), 3000);
     });
   }, []);
-  let [newProduct, setNewProduct] = useState({});
-  console.log("data", newProduct.title);
+
+  console.log("data of adding product", newProduct.title);
+
+  let [deletedProduct, setDeletedProduct] = useState({});
+
+  // delete product from DB and from client with socket io 
+  useEffect(() => {
+    const socket = socketIOClient("http://localhost:5000");
+    socket.on("product_deleted", (data) => {
+      setDeletedProduct(data);
+
+      setTimeout(() => setDeletedProduct({}), 3000);
+    });
+  }, []);
+
+  console.log("data of deleted product", newProduct.title);
 
   useEffect(() => {
     const socket = socketIOClient("http://localhost:5000");
@@ -117,7 +132,7 @@ const Products = (props) => {
       setProducts(updatedProducts);
     });
 
-    socket.on("product_deleted", (data) => {
+    socket.on("product_apdated", (data) => {
       setProducts(data);
 
     })
@@ -128,6 +143,9 @@ const Products = (props) => {
       <div style={{ padding: "30px" }}>
         {newProduct && newProduct.title &&
           <div>שים לב! מוצר חדש אפשרי לקניה {newProduct.title}</div>}
+        {deletedProduct && deletedProduct.title &&
+          <div>כבר לא זמין לקניה{deletedProduct.title}שים לב! המוצר </div>
+        }
       </div>
 
       {
