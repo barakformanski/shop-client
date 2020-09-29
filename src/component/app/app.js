@@ -33,7 +33,8 @@ function App(props) {
   const [count, setCount] = useState('');
   const [userSearch, setUserSearch] = useState(null);
   const [productQuantity, setProductQuantity] = useState(props.quantity);
-
+  const [deletedProduct, setDeletedProduct] = useState({});
+  const [newProduct, setNewProduct] = useState({});
   const [range, setRange] = useState([0, 100]);
   let userRange = (value) => {
     setRange(value);
@@ -64,7 +65,12 @@ function App(props) {
     itemsInCart: itemsInCart,
     setItemsInCart: (value) => setItemsInCart(value),
     userSearch: userSearch,
-    setUserSearch: (value) => setUserSearch(value)
+    setUserSearch: (value) => setUserSearch(value),
+
+    deletedProduct: deletedProduct,
+    setDeletedProduct: (value) => setDeletedProduct(value),
+    newProduct: newProduct,
+    setNewProduct: (value) => setNewProduct(value)
   }
 
 
@@ -127,6 +133,26 @@ function App(props) {
     return products ? JSON.parse(products) : [];
   }
 
+  useEffect(() => {
+    const socket = socketIOClient("http://localhost:5000");
+    socket.on("product_deleted", (data) => {
+      setDeletedProduct(data);
+      // setProducts(updatedProducts);
+
+      setTimeout(() => setDeletedProduct({}), 3000);
+    });
+  }, []);
+
+
+  // new product added- update products DB and client with socket io
+  useEffect(() => {
+    const socket = socketIOClient("http://localhost:5000");
+    socket.on("product_added", (data) => {
+      setNewProduct(data);
+
+      setTimeout(() => setNewProduct({}), 3000);
+    });
+  }, []);
 
   return (
     <Provider value={shopContext}>
@@ -135,13 +161,13 @@ function App(props) {
 
 
           <Header className="heder_component" />
+          <div style={{ padding: "30px" }}>
+            {newProduct && newProduct.title &&
+              <div>שים לב! מוצר חדש אפשרי לקניה {newProduct.title}</div>}
+            {deletedProduct && deletedProduct.title &&
+              <div>כבר לא זמין לקניה{deletedProduct.title}שים לב! המוצר </div>}
 
-          {/* <input type="file" ref={fileInput} /> */}
-          {/* <br /> */}
-          {/* <div style={{ padding: "30px" }}>
-          {product && product.title && <div> NEW PRODUCT ARRIVED! {product.title}</div>}
-        </div> */}
-          {/* <br /> */}
+          </div>
 
           <button className="get_products_button" onClick={getProductsList}>products list</button>
           <button className="local_storage_button" onClick={() => setCount((currentCount) => currentCount + 1)}>{count}localstorage</button>
@@ -164,9 +190,17 @@ function App(props) {
               <Slider range defaultValue={[0, 100]} onChange={userRange} />
               <Products
                 range={range}
+
               // userSearch={userSearch}
               // userImage={userImage}
               />
+              <div style={{ padding: "30px" }}>
+                {newProduct && newProduct.title &&
+                  <div>שים לב! מוצר חדש אפשרי לקניה {newProduct.title}</div>}
+                {deletedProduct && deletedProduct.title &&
+                  <div>כבר לא זמין לקניה{deletedProduct.title}שים לב! המוצר </div>
+                }
+              </div>
             </Route>
 
             <Route path="/:id">
@@ -179,7 +213,7 @@ function App(props) {
         </div>
 
       </Router>
-    </Provider>
+    </Provider >
   );
 };
 
